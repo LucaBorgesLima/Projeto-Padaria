@@ -1,10 +1,10 @@
 const express = require('express');
-const rota = require('./rotas/rotas');
+const route = require('./router/route');
 const app = express();
 const cors = require('cors');
 
 app.use(cors());
 app.use(express.json());
-app.use(rota);
+app.use(route);
 
-module.exports = app;
+module.exports = app;   
