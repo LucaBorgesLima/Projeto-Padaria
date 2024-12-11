@@ -1,29 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const { CriarPrato } = require('../controles/CriarPrato');
-const { MostrarPrato } = require('../controles/MostrarPratos');
+const PratosControles = require('../controles/Pratos');
+const Redis = require('redis');
 
-//rota criar prato
-router.post('/criar', async (req, res) => {
-  const { nome, categoria, preco } = req.body;
+//criar Pratos
+router.post('/pratos', PratosControles.CriaPratos);
 
-  try {
-    const prato = await CriarPrato({ nome, categoria, preco });
-    res.status(201).json({ message: 'Prato criado com sucesso', prato });
-  } catch (error) {
-    res.status(500).json({ error: 'Erro ao criar prato' });
-  }
-});
+//mostrar Pratos
+router.get('/cardapio', PratosControles.MostrarPratos);
 
-//rota mostrar os pratos
-router.get('/pratos', async (req, res) => {
-  try {
-    const mostrarpratos = await MostrarPrato();
-    res.status(201).json({ message: 'Mostrando pratos', mostrarpratos });
-  } catch (error) {
-    res.status(500).json({ error: 'Erro ao mostrar os pratos' })
-  }
-});
+//mostrar cardapio com filtro
+router.post('/cardapiofiltro',PratosControles.FiltraPratos);
 
 module.exports = router;
 
