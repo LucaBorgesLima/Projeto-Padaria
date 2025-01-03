@@ -31,8 +31,16 @@ module.exports = {
     },
 
     async MostrarPratos(req, res) {
-        const mostrar = await Pratos.findAll();
-        return res.json(mostrar)
+        //consultar para ver se tem os dados no cache
+        const CardapioRedis = await redis.get(`cache:cardapio`);
+        //consultar dados no db e armazenar no cache
+        if (CardapioRedis) {
+            return res.json(JSON.parse(CardapioRedis));
+        } else {
+            const mostrar = await Pratos.findAll();
+            await redis.setEx(`cache:cardapio`, 3600, JSON.stringify(mostrar))
+            return res.json(mostrar)
+        } 
           
     },
 
@@ -69,27 +77,4 @@ module.exports = {
         }
     },
     
-
-    async FiltraPratosSemCache(req, res) {
-        try {
-            const { categoria } = req.query;
-            console.log('categoria sem cache: ',categoria)
-
-            //Verificar se existe produtos nesse filtro no banco de dados
-            const pratos = await Pratos.findAll({
-                where: { categoria },
-                attributes: ['nome', 'preco'],
-            });
-
-            if (pratos.length > 0) {   
-                return res.json(pratos)
-
-            } else {
-                return res.status(409).json({ error: "Nao existe produtos nesse filtro." });
-            }
-        } catch (error) {
-            console.error("Erro ao filtrar prato:", error);
-            return res.status(500).json({ error: "Erro interno no servidor." });
-        }
-    },
 };    

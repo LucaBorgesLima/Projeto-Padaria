@@ -12,7 +12,6 @@ router.get('/cardapio', PratosControles.MostrarPratos);
 //mostrar cardapio com filtro
 router.get('/cardapio/filtro', PratosControles.FiltraPratos);
 
-router.get('/cardapio/semcache',PratosControles.FiltraPratosSemCache);
 
 module.exports = router;
 
