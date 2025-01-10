@@ -6,22 +6,14 @@ const {redis} = require('../RedisConfig');
 module.exports = {
     
     async CriaPratos(req, res) {
-        try {
+        try {  
             const { nome, preco, categoria } = req.body;
             //verificar se ja nao tem esse produto cadastrado
-            const Verificar = await Pratos.findAll({
-                where: {
-                    nome: nome,
-                    preco: preco,
-                }
-            });
-
-            if (Verificar.length === 0) {
-                const pratos = await Pratos.create({ nome, preco, categoria });
-                return res.json(pratos);
-            } else {
-                return res.status(409).json({ error: "Prato já existente no cardápio." });
-            }
+           
+            const create_pratos = await Pratos.create({ nome, preco, categoria });
+            return res.status(200).json(create_pratos);
+           
+            
         } catch (error) {
             console.error("Erro ao criar prato:", error);
             return res.status(500).json({ error: "Erro interno no servidor." });
@@ -50,7 +42,7 @@ module.exports = {
             console.log('categoria: ', categoria);
     
             // Verificar se dados já não existem no Redis
-            const CategoriaRedis = await redis.get(`cache:pratos:${categoria}`);
+            const CategoriaRedis = await redis.get(`cache:Pratos:${categoria}`);
             console.log('Get redis :', CategoriaRedis);
             
             if (CategoriaRedis) {

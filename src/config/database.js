@@ -9,8 +9,8 @@ module.exports = {
     database: process.env.DB_DATABASE,
     port: process.env.DB_PORT,
     define: {
-      timestamps: true,
-      decimalNumbers: true
+      decimalNumbers: true,
+      timestamps: false
       
     }, 
   },

@@ -1,10 +1,10 @@
 const { Model, DataTypes } = require('sequelize');
 
 // Modelo que representa a tabela pedidos no banco de dados
-class Pedidos extends Model{
+class PedidosTabela extends Model{
     static init(sequelize) {
         super.init({
-            cliente_id:DataTypes.INTEGER,
+            numero_pedido:DataTypes.INTEGER,
             status:DataTypes.STRING
         },{
             sequelize
@@ -12,4 +12,4 @@ class Pedidos extends Model{
     }
 }
 
-module.exports = Pedidos;
+module.exports = PedidosTabela;  

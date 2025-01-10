@@ -13,4 +13,4 @@ class Pratos extends Model{
     }
 }
 
-module.exports = Pratos;
+module.exports = Pratos;    
