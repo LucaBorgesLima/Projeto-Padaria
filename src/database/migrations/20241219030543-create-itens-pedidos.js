@@ -3,8 +3,8 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, sequelize) {
-    await queryInterface.createTable('Itens-pedidos', {
-      id_itens: {
+    await queryInterface.createTable('Itens_pedidos', {
+      id: {
         type: sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
@@ -13,7 +13,7 @@ module.exports = {
       pedido_id: {
         type: sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'PedidosTabela', key: 'id' },
+        references: { model: 'PedidosTabelas', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete:'CASCADE'
       },
@@ -26,7 +26,7 @@ module.exports = {
         type: sequelize.INTEGER,
         allowNull: false
       },
-      preco_total: {
+      preco_unitario: {
         type: sequelize.DECIMAL(10,2),
         allowNull: false
       }
@@ -34,7 +34,7 @@ module.exports = {
      
   },
 
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) { 
    
     await queryInterface.dropTable('Itens-pedidos');
     

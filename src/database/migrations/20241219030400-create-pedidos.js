@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, sequelize) {
-    await queryInterface.createTable('PedidosTabela', {
+    await queryInterface.createTable('PedidosTabelas', {
       id: {
         type: sequelize.INTEGER,
         autoIncrement: true,
@@ -17,6 +17,10 @@ module.exports = {
       status: {
         type: sequelize.STRING,
         allowNull: false
+      },
+      data_do_pedido: {
+        type: sequelize.DATE,
+        allowNull:false
       }
     });
      
