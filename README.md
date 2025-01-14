@@ -1,5 +1,5 @@
 <p align="center">
- Olá! Eu sou o Luca, estudante apaixonado por Análise e Desenvolvimento de Sistemas. Quero compartilhar com você um projeto incrível: um sistema inteligente para facilitar e otimizar os pedidos em restaurantes.
+ Olá! Eu sou o Luca, estudante apaixonado por Análise e Desenvolvimento de Sistemas. Quero compartilhar com você um projeto incrível: um sistema inteligente para facilitar e otimizar os pedidos em uma padaria , assim tendo um tempo de espera menor.
 </p>
 
 ## My Skills
