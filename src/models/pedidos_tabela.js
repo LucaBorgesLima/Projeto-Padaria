@@ -9,9 +9,16 @@ class PedidosTabelas extends Model{
             data_do_pedido:DataTypes.DATE
             
         },{
-            sequelize
+            sequelize,
+            modelName: 'PedidosTabelas',
+            tableName: 'PedidosTabelas'
         })
     }
+    static associate(models) {
+        this.hasMany(models.Itens_pedidos, {
+            foreignKey: 'pedido_id', as: 'itens'
+        })
+    };
 }
 
 module.exports = PedidosTabelas;  

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const PratosControles = require('../controles/Create_Pratos');
-const PedidosControles = require('../controles/Create_pedidos');
+const PratosControles = require('../controles/pratos');
+const PedidosControles = require('../controles/pedidos');
 
 
 //criar Pratos
@@ -19,6 +19,8 @@ router.post('/pedido', PedidosControles.create_pedido);
 //escolher produto
 router.post('/pedido/menu', PedidosControles.escolher_pedido);
 
+//comprovante do pedido
+router.get('/pedido/menu/comprovante', PedidosControles.comprovante_pedido);
 
 module.exports = router;
 

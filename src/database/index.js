@@ -12,4 +12,8 @@ Pratos.init(connection);
 PedidosTabelas.init(connection);
 Itens_pedidos.init(connection);
 
+Itens_pedidos.associate({ PedidosTabelas, Pratos });
+PedidosTabelas.associate({ Itens_pedidos });
+Pratos.associate({ Itens_pedidos });
+
 module.exports = connection;

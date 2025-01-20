@@ -26,7 +26,7 @@ module.exports = {
         type: sequelize.INTEGER,
         allowNull: false
       },
-      preco_unitario: {
+      preco_total: {
         type: sequelize.DECIMAL(10,2),
         allowNull: false
       }

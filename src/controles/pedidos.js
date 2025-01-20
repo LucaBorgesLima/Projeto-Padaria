@@ -1,13 +1,6 @@
 const PedidosTabelas = require("../models/pedidos_tabela");
 const Itens_pedidos = require('../models/itens-pedidos');
-const { Kafka } = require('kafkajs');
-
-
-const kafka = new Kafka({
-  clientId: 'my-app',
-  brokers: ['kafka1:9092', 'kafka2:9092']
-  
-});
+const Pratos = require("../models/Prato");
 
 //funcao para criar data do pedido no formato Mysql
 const formatDateForMySQL = (date) => {
@@ -31,7 +24,7 @@ let numero_pedido_global;
 module.exports = {
   async create_pedido(req, res) {
     try {
-      const { status } = req.body;
+      const  status  = 'Em andamento';
       const data_do_pedido = formatDateForMySQL(new Date());
       console.log("Corpo da requisição:", status,data_do_pedido);
 
@@ -52,11 +45,6 @@ module.exports = {
     try {
       //array de objetos para o pedido
       const { itens } = req.body;
-
-     // Verifica se itens existe e é um array 
-      if (!itens || !Array.isArray(itens)) {
-        return res.status(400).json({ error: "Itens não foram fornecidos ou não são um array." });
-      };
 
       // Busca pelo pedido usando o numero_pedido_global
       let pedido = await PedidosTabelas.findOne({
@@ -81,10 +69,11 @@ module.exports = {
           pedido_id,
           pratos_id: item.pratos_id,
           quantidade: item.quantidade,
-          preco_unitario: item.preco_unitario
+          preco_total: item.preco_total
 
         });
       }));
+
       return res.status(200).json({ escolhas });
       
     } catch (error) {
@@ -92,5 +81,41 @@ module.exports = {
       return res.status(500).json({ error: "Erro interno no servidor." });
     }
     
+  },
+
+  async comprovante_pedido(req, res) {
+    try {
+      let numeropedido = numero_pedido_global;
+
+      const comprovante = await PedidosTabelas.findAll({
+        attributes: ['numero_pedido', 'data_do_pedido'],
+        where: {
+          numero_pedido: numeropedido
+        },
+        include: [
+          {
+            model: Itens_pedidos,
+            as:'itens',
+            attributes: ['quantidade','preco_total'],
+            include: [
+              {
+                model: Pratos,
+                as:'prato',
+                attributes: ['nome'] 
+              }
+            ]
+          }
+        ],
+        raw: true
+      });
+
+      return res.status(200).json({ comprovante });
+
+    } catch (error) {
+      console.log("Erro no comprovante:", error);
+      return res.status(500).json({ error: "Erro interno no servidor." });
+    }
+
   }
 };
+ 
