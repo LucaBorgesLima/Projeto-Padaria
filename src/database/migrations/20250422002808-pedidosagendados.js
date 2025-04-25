@@ -34,6 +34,10 @@ module.exports = {
         type: sequelize.DATE,
         allowNull:false
       },
+      Dataretirada: {
+        type: sequelize.DATE,
+        allowNull:false
+      },
       status: {
         type: sequelize.STRING,
         allowNull: false

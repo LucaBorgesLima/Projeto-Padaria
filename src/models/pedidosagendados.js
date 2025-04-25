@@ -3,18 +3,21 @@ const { Model, DataTypes } = require('sequelize');
 class PedidosAgendados extends Model {
     static init(sequelize) {
         super.init({
-            id: {
-                type: DataTypes.INTEGER,
-                primaryKey: true,
-                autoIncrement: true
-            },
-            data_agendada: DataTypes.DATE,
+       
+            Pedido:DataTypes.INTEGER,
+            Pratosid:DataTypes.INTEGER,
+            Quantidade:DataTypes.INTEGER,
+            Preco: DataTypes.DECIMAL,
+            Datapedido: DataTypes.DATE,
+            Dataretirada: DataTypes.DATE,
             status: DataTypes.STRING,
-            numero_pedido: DataTypes.INTEGER
         }, {
             sequelize,
-            modelName: 'PedidosAgendados',
-            tableName: 'pedidos_agendados'
         })
     }
+    static associate(models) {
+        this.belongsTo(models.Pratos, { foreignKey: 'Pratosid', as: 'prato' });
+    }
 }
+
+module.exports = PedidosAgendados;
